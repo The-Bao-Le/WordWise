@@ -49,4 +49,12 @@
     <string name="settings_note">
         These controls will become interactive when DataStore is added.
     </string>
+
+    <string name="recent_accuracy">Recent accuracy</string>
+    <string name="words_attempted">Words attempted</string>
+    <string name="percentage_value">%1$d%%</string>
+    <string name="data_load_error">
+    Learning information could not be loaded.
+    </string>
+
 </resources>

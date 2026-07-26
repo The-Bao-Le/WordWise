@@ -20,6 +20,10 @@ import com.thebaole.wordwise.ui.activity.ActivityScreen
 import com.thebaole.wordwise.ui.home.HomeScreen
 import com.thebaole.wordwise.ui.settings.SettingsScreen
 import com.thebaole.wordwise.ui.statistics.StatisticsScreen
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.thebaole.wordwise.ui.home.HomeViewModel
+import com.thebaole.wordwise.ui.statistics.StatisticsViewModel
 
 
 @Composable
@@ -72,7 +76,11 @@ fun WordWiseApp() {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(WordWiseDestination.HOME.route) {
+                val viewModel: HomeViewModel = hiltViewModel()
+                val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
                 HomeScreen(
+                    uiState = uiState,
                     onStartSession = {
                         navController.navigate(
                             WordWiseDestination.ACTIVITY.route
@@ -88,7 +96,10 @@ fun WordWiseApp() {
             }
 
             composable(WordWiseDestination.STATISTICS.route) {
-                StatisticsScreen()
+                val viewModel: StatisticsViewModel = hiltViewModel()
+                val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+                StatisticsScreen(uiState = uiState)
             }
 
             composable(WordWiseDestination.SETTINGS.route) {

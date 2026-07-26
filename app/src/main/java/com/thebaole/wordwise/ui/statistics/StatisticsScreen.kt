@@ -1,6 +1,7 @@
 package com.thebaole.wordwise.ui.statistics
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +22,20 @@ import androidx.compose.ui.unit.dp
 import com.thebaole.wordwise.R
 
 @Composable
-fun StatisticsScreen(modifier: Modifier = Modifier) {
+fun StatisticsScreen(
+    uiState: StatisticsUiState,
+    modifier: Modifier = Modifier
+) {
+    if (uiState.isLoading) {
+        Box(
+            modifier = modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
+        return
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -34,19 +49,39 @@ fun StatisticsScreen(modifier: Modifier = Modifier) {
             fontWeight = FontWeight.Bold
         )
 
+        if (uiState.hasError) {
+            Text(
+                text = stringResource(R.string.data_load_error),
+                color = MaterialTheme.colorScheme.error
+            )
+        }
+
         StatisticCard(
             label = stringResource(R.string.overall_accuracy),
-            value = stringResource(R.string.zero_percent)
+            value = stringResource(
+                R.string.percentage_value,
+                uiState.overallAccuracy
+            )
         )
 
         StatisticCard(
             label = stringResource(R.string.mastered_words),
-            value = stringResource(R.string.zero)
+            value = uiState.masteredWords.toString()
         )
 
         StatisticCard(
             label = stringResource(R.string.total_sessions),
-            value = stringResource(R.string.zero)
+            value = uiState.totalSessions.toString()
+        )
+
+        StatisticCard(
+            label = stringResource(R.string.words_attempted),
+            value = uiState.totalWordsAttempted.toString()
+        )
+
+        StatisticCard(
+            label = stringResource(R.string.words_due),
+            value = uiState.wordsDue.toString()
         )
 
         Text(
