@@ -1,3 +1,52 @@
 <resources>
-    <string name="app_name">Wordwise</string>
+    <string name="app_name">WordWise</string>
+
+    <!-- Navigation -->
+    <string name="navigation_home">Home</string>
+    <string name="navigation_practice">Practice</string>
+    <string name="navigation_statistics">Statistics</string>
+    <string name="navigation_settings">Settings</string>
+
+    <!-- Home -->
+    <string name="home_title">WordWise</string>
+    <string name="home_subtitle">Academic Vocabulary Coach</string>
+    <string name="home_description">
+        Build your academic vocabulary through short review sessions and spaced repetition.
+    </string>
+    <string name="words_due">Words due for review</string>
+    <string name="zero">0</string>
+    <string name="start_five_word_session">Start 5-word session</string>
+    <string name="start_ten_word_session">Start 10-word session</string>
+    <string name="home_setup_note">
+        Vocabulary content and learning progress will be added in later phases.
+    </string>
+
+    <!-- Activity -->
+    <string name="activity_title">Practice</string>
+    <string name="activity_placeholder_title">Quiz session</string>
+    <string name="activity_placeholder_description">
+        Vocabulary questions, answer choices and feedback will appear here.
+    </string>
+
+    <!-- Statistics -->
+    <string name="statistics_title">Learning statistics</string>
+    <string name="overall_accuracy">Overall accuracy</string>
+    <string name="mastered_words">Mastered words</string>
+    <string name="total_sessions">Total sessions</string>
+    <string name="zero_percent">0%</string>
+    <string name="statistics_note">
+        Statistics will be calculated from Room data in a later phase.
+    </string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="difficulty">Difficulty</string>
+    <string name="foundation">Foundation</string>
+    <string name="session_length">Session length</string>
+    <string name="five_questions">5 questions</string>
+    <string name="theme">Theme</string>
+    <string name="system_default">System default</string>
+    <string name="settings_note">
+        These controls will become interactive when DataStore is added.
+    </string>
 </resources>
