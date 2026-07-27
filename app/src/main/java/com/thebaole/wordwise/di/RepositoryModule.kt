@@ -1,6 +1,6 @@
 package com.thebaole.wordwise.di
 
-import com.thebaole.wordwise.data.repository.InMemoryLearningRepository
+import com.thebaole.wordwise.data.repository.RoomLearningRepository
 import com.thebaole.wordwise.domain.repository.LearningRepository
 import dagger.Binds
 import dagger.Module
@@ -15,6 +15,6 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindLearningRepository(
-        implementation: InMemoryLearningRepository
+        implementation: RoomLearningRepository
     ): LearningRepository
 }
