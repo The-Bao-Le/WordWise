@@ -57,4 +57,27 @@
     Learning information could not be loaded.
     </string>
 
+    <string name="practice_title">Vocabulary practice</string>
+    <string name="question_progress">Question %1$d of %2$d</string>
+    <string name="choose_definition">Choose the correct definition</string>
+    <string name="practice_example">Example: %1$s</string>
+    <string name="submit_answer">Submit answer</string>
+    <string name="next_question">Next question</string>
+    <string name="finish_session">Finish session</string>
+    <string name="answer_correct">Correct!</string>
+    <string name="answer_incorrect">Not quite.</string>
+    <string name="correct_definition">Correct answer: %1$s</string>
+    <string name="session_complete">Session complete</string>
+    <string name="session_score">%1$d out of %2$d correct</string>
+    <string name="session_accuracy">%1$d%% accuracy</string>
+    <string name="practice_again">Practice again</string>
+    <string name="return_home">Return home</string>
+    <string name="try_again">Try again</string>
+    <string name="practice_load_error">
+    The practice session could not be loaded.
+</string>
+    <string name="practice_save_error">
+    The result could not be saved. Please try again.
+</string>
+
 </resources>

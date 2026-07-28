@@ -68,4 +68,25 @@ interface WordDao {
         consecutiveCorrect: Int,
         isMastered: Boolean
     )
+
+    @Query(
+        """
+    SELECT *
+    FROM words
+    WHERE word_id = :wordId
+    LIMIT 1
+    """
+    )
+    suspend fun getWordById(
+        wordId: Long
+    ): WordEntity?
+
+    @Query(
+        """
+    SELECT *
+    FROM words
+    ORDER BY word_id ASC
+    """
+    )
+    suspend fun getAllWords(): List<WordEntity>
 }

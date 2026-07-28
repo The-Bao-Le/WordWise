@@ -50,4 +50,17 @@ interface PracticeSessionDao {
         """
     )
     suspend fun deleteSessionById(sessionId: Long)
+
+    @Query(
+        """
+    UPDATE practice_sessions
+    SET completed_at = :completedAt
+    WHERE session_id = :sessionId
+      AND completed_at IS NULL
+    """
+    )
+    suspend fun completeSession(
+        sessionId: Long,
+        completedAt: Long
+    )
 }

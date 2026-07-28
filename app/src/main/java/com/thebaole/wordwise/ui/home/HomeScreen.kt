@@ -25,7 +25,7 @@ import com.thebaole.wordwise.R
 @Composable
 fun HomeScreen(
     uiState: HomeUiState,
-    onStartSession: () -> Unit,
+    onStartSession: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     if (uiState.isLoading) {
@@ -103,14 +103,14 @@ fun HomeScreen(
         }
 
         Button(
-            onClick = onStartSession,
+            onClick = { onStartSession(5) },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(stringResource(R.string.start_five_word_session))
         }
 
         OutlinedButton(
-            onClick = onStartSession,
+            onClick = { onStartSession(10) },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(stringResource(R.string.start_ten_word_session))

@@ -24,7 +24,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.thebaole.wordwise.ui.home.HomeViewModel
 import com.thebaole.wordwise.ui.statistics.StatisticsViewModel
-
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.thebaole.wordwise.ui.activity.ActivityViewModel
 
 @Composable
 fun WordWiseApp() {
@@ -37,17 +41,30 @@ fun WordWiseApp() {
             NavigationBar {
                 WordWiseDestination.entries.forEach { destination ->
                     val label = stringResource(destination.labelRes)
+                    val selected =
+                        currentDestination
+                            ?.hierarchy
+                            ?.any { navDestination ->
+                                navDestination.route
+                                    ?.substringBefore("?") ==
+                                        destination.route
+                            } == true
 
                     NavigationBarItem(
                         selected = currentDestination
                             ?.hierarchy
                             ?.any { it.route == destination.route } == true,
                         onClick = {
-                            navController.navigate(destination.route) {
+                            val targetRoute =
+                                if (destination == WordWiseDestination.ACTIVITY) {
+                                    createActivityRoute(5)
+                                } else {
+                                    destination.route
+                                }
+
+                            navController.navigate(targetRoute) {
                                 popUpTo(
-                                    navController.graph
-                                        .findStartDestination()
-                                        .id
+                                    navController.graph.findStartDestination().id
                                 ) {
                                     saveState = true
                                 }
@@ -77,13 +94,14 @@ fun WordWiseApp() {
         ) {
             composable(WordWiseDestination.HOME.route) {
                 val viewModel: HomeViewModel = hiltViewModel()
-                val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+                val uiState by
+                viewModel.uiState.collectAsStateWithLifecycle()
 
                 HomeScreen(
                     uiState = uiState,
-                    onStartSession = {
+                    onStartSession = { questionCount ->
                         navController.navigate(
-                            WordWiseDestination.ACTIVITY.route
+                            createActivityRoute(questionCount)
                         ) {
                             launchSingleTop = true
                         }
@@ -91,8 +109,43 @@ fun WordWiseApp() {
                 )
             }
 
-            composable(WordWiseDestination.ACTIVITY.route) {
-                ActivityScreen()
+            composable(
+                route = ACTIVITY_ROUTE_PATTERN,
+                arguments = listOf(
+                    navArgument(QUESTION_COUNT_ARGUMENT) {
+                        type = NavType.IntType
+                        defaultValue = 5
+                    }
+                )
+            ) {
+                val viewModel: ActivityViewModel =
+                    hiltViewModel()
+
+                val uiState by
+                viewModel.uiState.collectAsStateWithLifecycle()
+
+                ActivityScreen(
+                    uiState = uiState,
+                    onAnswerSelected = viewModel::selectAnswer,
+                    onSubmitAnswer = viewModel::submitAnswer,
+                    onNextQuestion =
+                        viewModel::moveToNextQuestion,
+                    onRetry = viewModel::retry,
+                    onPracticeAgain = viewModel::restartSession,
+                    onReturnHome = {
+                        navController.navigate(
+                            WordWiseDestination.HOME.route
+                        ) {
+                            popUpTo(
+                                WordWiseDestination.HOME.route
+                            ) {
+                                inclusive = false
+                            }
+
+                            launchSingleTop = true
+                        }
+                    }
+                )
             }
 
             composable(WordWiseDestination.STATISTICS.route) {

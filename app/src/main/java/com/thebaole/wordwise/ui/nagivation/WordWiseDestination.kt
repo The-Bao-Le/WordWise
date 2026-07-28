@@ -35,3 +35,20 @@ enum class WordWiseDestination(
         icon = Icons.Default.Settings
     )
 }
+
+const val QUESTION_COUNT_ARGUMENT =
+    "questionCount"
+
+val ACTIVITY_ROUTE_PATTERN =
+    "${WordWiseDestination.ACTIVITY.route}" +
+            "?$QUESTION_COUNT_ARGUMENT=" +
+            "{$QUESTION_COUNT_ARGUMENT}"
+
+fun createActivityRoute(
+    questionCount: Int
+): String {
+    require(questionCount == 5 || questionCount == 10)
+
+    return "${WordWiseDestination.ACTIVITY.route}" +
+            "?$QUESTION_COUNT_ARGUMENT=$questionCount"
+}
