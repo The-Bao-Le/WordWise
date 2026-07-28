@@ -89,4 +89,14 @@ interface WordDao {
     """
     )
     suspend fun getAllWords(): List<WordEntity>
+
+    @Query(
+        """
+    UPDATE words
+    SET next_review_at = 0,
+        consecutive_correct = 0,
+        is_mastered = 0
+    """
+    )
+    suspend fun resetLearningProgress()
 }

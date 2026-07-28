@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.thebaole.wordwise.R
+import androidx.compose.material.icons.filled.Settings
 
 enum class WordWiseDestination(
     val route: String,
@@ -31,7 +32,7 @@ enum class WordWiseDestination(
     ),
     SETTINGS(
         route = "settings",
-        labelRes = R.string.navigation_settings,
+        labelRes = R.string.settings_title,
         icon = Icons.Default.Settings
     )
 }

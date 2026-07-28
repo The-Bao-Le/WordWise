@@ -80,4 +80,56 @@
     The result could not be saved. Please try again.
 </string>
 
+    <string name="settings_intro">
+    Personalise your practice experience. Your preferences and learning progress remain on this device.
+</string>
+
+    <string name="practice_preferences">
+    Practice preferences
+</string>
+    <string name="default_session_length">
+    Default session length
+</string>
+    <string name="default_session_description">
+    Used when Practice is opened from the bottom navigation.
+</string>
+    <string name="five_questions_description">
+    A shorter practice session
+</string>
+    <string name="ten_questions">10 questions</string>
+    <string name="ten_questions_description">
+    A complete vocabulary session
+</string>
+
+    <string name="show_example_sentences">
+    Show example sentences
+</string>
+    <string name="show_example_sentences_description">
+    Display a usage example with each vocabulary question.
+</string>
+
+    <string name="learning_data">Learning data</string>
+    <string name="learning_data_description">
+    WordWise stores practice progress locally and does not require an account.
+</string>
+    <string name="reset_progress">Reset learning progress</string>
+    <string name="reset_progress_description">
+    Delete all sessions and attempts while keeping the vocabulary list.
+</string>
+    <string name="reset_progress_title">
+    Reset learning progress?
+</string>
+    <string name="reset_progress_confirmation">
+    Your scores, attempts and mastered-word progress will be permanently cleared.
+</string>
+    <string name="cancel">Cancel</string>
+    <string name="reset">Reset</string>
+    <string name="resetting_progress">Resetting…</string>
+    <string name="progress_reset_success">
+    Learning progress has been reset.
+</string>
+    <string name="settings_error">
+    The change could not be saved. Please try again.
+</string>
+
 </resources>

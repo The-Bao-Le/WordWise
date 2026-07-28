@@ -7,6 +7,8 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+import com.thebaole.wordwise.data.preferences.DataStoreSettingsRepository
+import com.thebaole.wordwise.domain.repository.SettingsRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -17,4 +19,10 @@ abstract class RepositoryModule {
     abstract fun bindLearningRepository(
         implementation: RoomLearningRepository
     ): LearningRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindSettingsRepository(
+        implementation: DataStoreSettingsRepository
+    ): SettingsRepository
 }

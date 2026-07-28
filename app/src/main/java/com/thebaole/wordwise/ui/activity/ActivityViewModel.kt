@@ -11,10 +11,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import com.thebaole.wordwise.domain.repository.SettingsRepository
 
 @HiltViewModel
 class ActivityViewModel @Inject constructor(
     private val repository: LearningRepository,
+    private val settingsRepository: SettingsRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -39,6 +41,7 @@ class ActivityViewModel @Inject constructor(
         _uiState.asStateFlow()
 
     init {
+        observeSettings()
         startSession()
     }
 
@@ -157,7 +160,9 @@ class ActivityViewModel @Inject constructor(
         _uiState.value =
             ActivityUiState(
                 isLoading = true,
-                questionCount = questionCount
+                questionCount = questionCount,
+                showExampleSentences =
+                    showExampleSentences
             )
 
         viewModelScope.launch {
@@ -221,4 +226,25 @@ class ActivityViewModel @Inject constructor(
             }
         }
     }
+
+    private var showExampleSentences = true
+
+    private fun observeSettings() {
+        viewModelScope.launch {
+            settingsRepository.settingsStream
+                .collect { settings ->
+                    showExampleSentences =
+                        settings.showExampleSentences
+
+                    _uiState.update {
+                        it.copy(
+                            showExampleSentences =
+                                settings
+                                    .showExampleSentences
+                        )
+                    }
+                }
+        }
+    }
+
 }

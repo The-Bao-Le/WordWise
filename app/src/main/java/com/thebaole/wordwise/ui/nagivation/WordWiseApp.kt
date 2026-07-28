@@ -29,12 +29,20 @@ import androidx.navigation.navArgument
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.thebaole.wordwise.ui.activity.ActivityViewModel
+import com.thebaole.wordwise.ui.settings.SettingsScreen
+import com.thebaole.wordwise.ui.settings.SettingsViewModel
 
 @Composable
 fun WordWiseApp() {
     val navController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = backStackEntry?.destination
+    val settingsViewModel: SettingsViewModel =
+        hiltViewModel()
+
+    val settingsUiState by
+    settingsViewModel.uiState
+        .collectAsStateWithLifecycle()
 
     Scaffold(
         bottomBar = {
@@ -57,7 +65,7 @@ fun WordWiseApp() {
                         onClick = {
                             val targetRoute =
                                 if (destination == WordWiseDestination.ACTIVITY) {
-                                    createActivityRoute(5)
+                                    createActivityRoute(settingsUiState.defaultQuestionCount)
                                 } else {
                                     destination.route
                                 }
@@ -155,8 +163,22 @@ fun WordWiseApp() {
                 StatisticsScreen(uiState = uiState)
             }
 
-            composable(WordWiseDestination.SETTINGS.route) {
-                SettingsScreen()
+            composable(
+                WordWiseDestination.SETTINGS.route
+            ) {
+                SettingsScreen(
+                    uiState = settingsUiState,
+                    onQuestionCountChanged =
+                        settingsViewModel::setDefaultQuestionCount,
+                    onShowExamplesChanged =
+                        settingsViewModel::setShowExampleSentences,
+                    onResetRequested =
+                        settingsViewModel::requestProgressReset,
+                    onResetCancelled =
+                        settingsViewModel::cancelProgressReset,
+                    onResetConfirmed =
+                        settingsViewModel::confirmProgressReset
+                )
             }
         }
     }

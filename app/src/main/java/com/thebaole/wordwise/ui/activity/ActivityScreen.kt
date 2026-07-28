@@ -137,14 +137,15 @@ fun ActivityScreen(
                         MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.Bold
                 )
-
-                Text(
-                    text = stringResource(
-                        R.string.practice_example,
-                        question.exampleSentence
-                    ),
-                    style = MaterialTheme.typography.bodyLarge
-                )
+                if (uiState.showExampleSentences) {
+                    Text(
+                        text = stringResource(
+                            R.string.practice_example,
+                            question.exampleSentence
+                        ),
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
             }
         }
 

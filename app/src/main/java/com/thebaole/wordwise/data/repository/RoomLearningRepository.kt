@@ -197,4 +197,11 @@ class RoomLearningRepository @Inject constructor(
                         statistics.totalAttempts
                 ).toInt()
     }
+
+    override suspend fun resetLearningProgress() {
+        database.withTransaction {
+            practiceSessionDao.deleteAllSessions()
+            wordDao.resetLearningProgress()
+        }
+    }
 }

@@ -25,4 +25,7 @@ interface LearningRepository {
         sessionId: Long,
         completedAt: Long
     )
+
+    suspend fun resetLearningProgress()
+
 }

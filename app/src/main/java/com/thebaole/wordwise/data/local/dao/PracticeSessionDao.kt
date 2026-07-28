@@ -63,4 +63,7 @@ interface PracticeSessionDao {
         sessionId: Long,
         completedAt: Long
     )
+
+    @Query("DELETE FROM practice_sessions")
+    suspend fun deleteAllSessions()
 }

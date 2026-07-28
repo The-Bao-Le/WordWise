@@ -144,4 +144,66 @@ class WordWiseDatabaseTest {
 
             assertEquals(0, remainingAttempts)
         }
+
+    @Test
+    fun resetQueriesClearLearningProgress() = runBlocking {
+        val wordIds = wordDao.insertWords(
+            listOf(
+                WordEntity(
+                    term = "persistent",
+                    definition =
+                        "Continuing despite difficulty.",
+                    exampleSentence =
+                        "The learner remained persistent.",
+                    nextReviewAt = 10_000L,
+                    consecutiveCorrect = 2,
+                    isMastered = true
+                )
+            )
+        )
+
+        val sessionId = sessionDao.insertSession(
+            PracticeSessionEntity(
+                startedAt = 1_000L,
+                completedAt = 2_000L,
+                plannedQuestionCount = 1
+            )
+        )
+
+        attemptDao.insertAttempt(
+            AttemptEntity(
+                sessionId = sessionId,
+                wordId = wordIds.first(),
+                selectedAnswer =
+                    "Continuing despite difficulty.",
+                isCorrect = true,
+                answeredAt = 1_500L
+            )
+        )
+
+        sessionDao.deleteAllSessions()
+        wordDao.resetLearningProgress()
+
+        val resetWord =
+            wordDao.getWordById(wordIds.first())
+
+        assertNotNull(resetWord)
+        assertEquals(0L, resetWord!!.nextReviewAt)
+        assertEquals(0, resetWord.consecutiveCorrect)
+        assertEquals(false, resetWord.isMastered)
+
+        assertEquals(
+            0,
+            sessionDao
+                .observeCompletedSessionCount()
+                .first()
+        )
+
+        assertEquals(
+            0,
+            attemptDao.countAttemptsForSession(
+                sessionId
+            )
+        )
+    }
 }

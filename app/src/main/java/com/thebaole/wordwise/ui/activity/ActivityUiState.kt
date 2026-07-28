@@ -14,7 +14,8 @@ data class ActivityUiState(
     val hasSubmittedAnswer: Boolean = false,
     val isCurrentAnswerCorrect: Boolean? = null,
     val correctCount: Int = 0,
-    val isFinished: Boolean = false
+    val isFinished: Boolean = false,
+    val showExampleSentences: Boolean = true,
 ) {
     val currentQuestion: PracticeQuestion?
         get() = questions.getOrNull(currentQuestionIndex)
