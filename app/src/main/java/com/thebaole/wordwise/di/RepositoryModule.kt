@@ -9,6 +9,8 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import com.thebaole.wordwise.data.preferences.DataStoreSettingsRepository
 import com.thebaole.wordwise.domain.repository.SettingsRepository
+import com.thebaole.wordwise.data.repository.NetworkDictionaryRepository
+import com.thebaole.wordwise.domain.repository.DictionaryRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -25,4 +27,10 @@ abstract class RepositoryModule {
     abstract fun bindSettingsRepository(
         implementation: DataStoreSettingsRepository
     ): SettingsRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindDictionaryRepository(
+        implementation: NetworkDictionaryRepository
+    ): DictionaryRepository
 }

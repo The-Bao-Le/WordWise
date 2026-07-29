@@ -31,7 +31,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.thebaole.wordwise.ui.activity.ActivityViewModel
 import com.thebaole.wordwise.ui.settings.SettingsScreen
 import com.thebaole.wordwise.ui.settings.SettingsViewModel
+import com.thebaole.wordwise.ui.dictionary.DictionaryScreen
+import com.thebaole.wordwise.ui.dictionary.DictionaryViewModel
 
+private const val DICTIONARY_ROUTE =
+    "dictionary"
 @Composable
 fun WordWiseApp() {
     val navController = rememberNavController()
@@ -113,6 +117,11 @@ fun WordWiseApp() {
                         ) {
                             launchSingleTop = true
                         }
+                    },
+                    onOpenDictionary = {
+                        navController.navigate(DICTIONARY_ROUTE) {
+                            launchSingleTop = true
+                        }
                     }
                 )
             }
@@ -178,6 +187,25 @@ fun WordWiseApp() {
                         settingsViewModel::cancelProgressReset,
                     onResetConfirmed =
                         settingsViewModel::confirmProgressReset
+                )
+            }
+            composable(DICTIONARY_ROUTE) {
+                val dictionaryViewModel:
+                        DictionaryViewModel = hiltViewModel()
+
+                val dictionaryUiState by
+                dictionaryViewModel.uiState
+                    .collectAsStateWithLifecycle()
+
+                DictionaryScreen(
+                    uiState = dictionaryUiState,
+                    onQueryChanged =
+                        dictionaryViewModel::updateQuery,
+                    onSearch =
+                        dictionaryViewModel::search,
+                    onBack = {
+                        navController.navigateUp()
+                    }
                 )
             }
         }

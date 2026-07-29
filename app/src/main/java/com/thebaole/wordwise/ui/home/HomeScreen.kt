@@ -26,6 +26,7 @@ import com.thebaole.wordwise.R
 fun HomeScreen(
     uiState: HomeUiState,
     onStartSession: (Int) -> Unit,
+    onOpenDictionary: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     if (uiState.isLoading) {
@@ -121,5 +122,41 @@ fun HomeScreen(
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
+
+        Card(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement =
+                    Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = stringResource(
+                        R.string.dictionary_home_title
+                    ),
+                    style =
+                        MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.SemiBold
+                )
+
+                Text(
+                    text = stringResource(
+                        R.string.dictionary_home_description
+                    )
+                )
+
+                OutlinedButton(
+                    onClick = onOpenDictionary,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        stringResource(
+                            R.string.open_dictionary
+                        )
+                    )
+                }
+            }
+        }
     }
 }

@@ -63,18 +63,16 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     implementation("com.google.dagger:hilt-android:2.59.2")
     kapt("com.google.dagger:hilt-android-compiler:2.59.2")
-
     implementation("androidx.hilt:hilt-navigation-compose:1.3.0")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.10.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
-
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     kapt(libs.androidx.room.compiler)
-
     androidTestImplementation(libs.androidx.room.testing)
-
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.retrofit.core)
+    implementation(libs.retrofit.gson)
 
 }
 
