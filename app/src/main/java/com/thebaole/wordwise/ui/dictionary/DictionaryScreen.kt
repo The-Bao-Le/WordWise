@@ -33,6 +33,12 @@ import androidx.compose.ui.unit.dp
 import com.thebaole.wordwise.R
 import com.thebaole.wordwise.domain.model.DictionaryEntry
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,6 +50,8 @@ fun DictionaryScreen(
     modifier: Modifier = Modifier
 ) {
     val focusManager = LocalFocusManager.current
+    val loadingDescription =
+        stringResource(R.string.dictionary_loading)
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -89,6 +97,14 @@ fun DictionaryScreen(
                 style = MaterialTheme.typography.bodyLarge
             )
 
+            Text(
+                text = stringResource(
+                    R.string.dictionary_privacy_notice
+                ),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
             OutlinedTextField(
                 value = uiState.query,
                 onValueChange = onQueryChanged,
@@ -103,6 +119,9 @@ fun DictionaryScreen(
                 },
                 singleLine = true,
                 enabled = !uiState.isLoading,
+                isError =
+                    uiState.error ==
+                            DictionaryError.EMPTY_QUERY,
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Search
                 ),
@@ -130,7 +149,11 @@ fun DictionaryScreen(
             }
 
             if (uiState.isLoading) {
-                CircularProgressIndicator()
+                CircularProgressIndicator(
+                    modifier = Modifier.semantics {
+                        contentDescription = loadingDescription
+                    }
+                )
             }
 
             val errorMessage =
@@ -150,8 +173,10 @@ fun DictionaryScreen(
             if (errorMessage != null) {
                 Text(
                     text = stringResource(errorMessage),
-                    color =
-                        MaterialTheme.colorScheme.error,
+                    modifier = Modifier.semantics {
+                        liveRegion = LiveRegionMode.Polite
+                    },
+                    color = MaterialTheme.colorScheme.error,
                     fontWeight = FontWeight.Medium
                 )
             }
@@ -177,9 +202,10 @@ private fun DictionaryResultCard(
         ) {
             Text(
                 text = entry.word,
-                style =
-                    MaterialTheme.typography
-                        .headlineMedium,
+                modifier = Modifier.semantics {
+                    heading()
+                },
+                style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold
             )
 

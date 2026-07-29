@@ -196,5 +196,18 @@
     <string name="navigate_back">
     Go back
 </string>
+    <string name="privacy_title">Privacy and data</string>
+
+    <string name="privacy_description">
+    Practice progress and preferences are stored only on this device. Dictionary searches are sent to the Free Dictionary API only when you tap Search and are not saved by WordWise.
+</string>
+
+    <string name="dictionary_privacy_notice">
+    Search terms are sent to the Free Dictionary API. WordWise does not store your dictionary searches.
+</string>
+
+    <string name="dictionary_loading">
+    Searching the dictionary
+</string>
 
 </resources>
